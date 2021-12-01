@@ -15,3 +15,15 @@ for (i in seq_along(x)) {
 }
 
 sum(y, na.rm = TRUE)
+
+##PART 2
+
+z <- c()
+
+for (i in 4:length(x)) {
+  
+  z[i] <- sum(x[(i-2):i], na.rm = TRUE) > sum(x[(i-3):(i-1)], na.rm = TRUE)
+  
+}
+
+sum(z, na.rm = TRUE)
