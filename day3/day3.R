@@ -31,63 +31,42 @@ gam_int*ep_int
 
 ##PART 2
 
-m <- as.matrix(dig_df)
-n <- nrow(m)
-j <- 1
-zz <- list()
-
-##refactor to get most common digit
-
-while (n > 1) {
+get_mode <- function(col, fun, tie) {
   
-  ones <- length(m[, j][m[, j] == 1])
-  zeroes <- length(m[, j][m[, j] == 0])
+  tb <- table(col)
   
-  dig <- if (ones >= zeroes) 1 else 0
+  ret <- if (tb[1] == tb[2]) {
+    tie
+  } else if (fun == "max") {
+    names(which.max(tb))
+  } else {
+    names(which.min(tb))
+  }
   
-  # scaled <- sum(m[, j])/n
-  # 
-  # scaled <- if (scaled >= .5) 1 else scaled
-  # 
-  # dig <- round(scaled)
-  
-  m <- m[m[, j] == dig, ]
-  
-  n <- nrow(m)
-  
-  cat("rows remaining: ", n)
-
-  j <- j + 1
-  
-  
+  return(ret)
 }
 
-ox_rating <- strtoi(paste0(as.character(m), collapse = ""), base = 2)
 
-#resetting for co2 rating
-m <- as.matrix(dig_df)
-n <- nrow(m)
-j <- 1
-
-while (n > 1) {
+calc_gas <- function(m, fun, tie) {
+  mat <- m
+  n <- nrow(mat)
+  i <- 1
   
-  ones <- length(m[, j][m[, j] == 1])
-  zeroes <- length(m[, j][m[, j] == 0])
+  while(n > 1) {
+    a <- as.integer(get_mode(mat[, i], fun, tie))
+    mat <- mat[mat[, i] == a, , drop = FALSE]
+    n <- nrow(mat)
+    i <- i +1
+  }
   
-  dig <- if (ones > zeroes) 0 else 1
-  
-  m <- m[m[, j] == dig, ]
-  
-  n <- nrow(m)
-  
-  cat("rows remaining: ", n)
-  
-  j <- j + 1
-  
-  
+  return(mat)
 }
 
-co2_rating <- strtoi(paste0(as.character(m), collapse = ""), base = 2)
+aaa <- calc_gas(m, "max", "1")
+ox_rating <- strtoi(paste0(as.character(aaa), collapse = ""), base = 2)
 
-co2_rating*ox_rating
-#not correct right now
+bbb <- calc_gas(m, "min", "0")
+co2_rating <- strtoi(paste0(as.character(bbb), collapse = ""), base = 2)
+
+ox_rating*co2_rating
+
