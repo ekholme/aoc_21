@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func main() {
+func readData() ([][]string, error) {
 	file, err := os.Open("day1/input.csv")
 	if err != nil {
 		log.Fatal("Failed to open csv")
@@ -18,6 +18,13 @@ func main() {
 	r := csv.NewReader(file)
 
 	lines, err := r.ReadAll()
+
+	return lines, err
+}
+
+func main() {
+
+	lines, err := readData()
 	if err != nil {
 		log.Fatal("Failed to read csv")
 	}

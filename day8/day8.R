@@ -42,10 +42,6 @@ z7 <- zz[[which(lens == 3)]]
 z8 <- zz[[which(lens == 7)]]
 
 
-bottom <- zz[which(lens == 6)]
-bottom2 <- 
-
-
 
 
 p1 <- tst[str_length(tst) == 2]
