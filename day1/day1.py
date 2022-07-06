@@ -15,4 +15,15 @@ print(counter)
 
 #PART 2
 
-#Resume here
+counter = 0
+ln = len(data) - 3
+
+for i in range(ln):
+
+    a = sum(data[i:i+3])
+    b = sum(data[i+1:i+4])
+
+    if b > a:
+        counter +=1
+
+print(counter)
