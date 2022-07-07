@@ -28,6 +28,9 @@ type movement struct {
 }
 
 func main() {
+
+	//data setup
+
 	d, err := readData()
 
 	if err != nil {
@@ -53,6 +56,8 @@ func main() {
 
 	}
 
+	//part 1
+
 	depth := 0
 	horz := 0
 
@@ -71,4 +76,24 @@ func main() {
 
 	fmt.Println(res)
 
+	//part 2
+	aim := 0
+	depth = 0
+	horz = 0
+
+	for _, v := range moves {
+
+		if v.direction == "forward" {
+			horz += v.value
+			depth += aim * v.value
+		} else if v.direction == "up" {
+			aim -= v.value
+		} else if v.direction == "down" {
+			aim += v.value
+		}
+	}
+
+	res = depth * horz
+
+	fmt.Println(res)
 }
